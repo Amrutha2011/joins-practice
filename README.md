@@ -25,3 +25,6 @@ Customers and Orders (where each order is linked to a customer)
 Students and Courses (with enrollment information linking students to courses)
 Employees and Departments (employees belong to departments)
 
+output of task 1
+[TASK 1 JOINS PRACTICE.txt](https://github.com/user-attachments/files/18733871/TASK.1.JOINS.PRACTICE.txt)
+
