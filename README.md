@@ -32,5 +32,9 @@ output of task 2
 [TASK 2 DATA ANALYSIS WITH COMPLEX QUERIES.txt](https://github.com/user-attachments/files/18733905/TASK.2.DATA.ANALYSIS.WITH.COMPLEX.QUERIES.txt)
 
 output of task 3
+[TASK 3 DATABASE MIGRATION.txt](https://github.com/user-attachments/files/18733934/TASK.3.DATABASE.MIGRATION.txt)
+
+output of task 4
+
 
 
