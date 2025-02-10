@@ -1,0 +1,42 @@
+mysql> CREATE TABLE Employee (EmpID INT PRIMARY KEY,Name VARCHAR(50),Department VARCHAR(50),Salary DECIMAL(10,2), JoiningDate DATE);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> INSERT INTO Employee (EmpID, Name, Department, Salary, JoiningDate) VALUES(1, 'Alice', 'HR', 50000, '2021-06-15'),(2, 'Bob', 'IT', 70000, '2020-09-10'),(3, 'Charlie', 'Finance', 60000, '2019-08-25'),(4, 'David', 'IT', 75000, '2018-12-01'),(5, 'Eve', 'HR', 52000, '2022-01-20');
+Query OK, 5 rows affected (0.01 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT Name, Department, Salary, RANK() OVER (PARTITION BY Department ORDER BY Salary DESC) AS SalaryRankFROM Employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Employee' at line 1
+mysql> SELECT Name, Department, Salary, RANK() OVER (PARTITION BY Department ORDER BY Salary DESC) AS SalaryRank FROM Employee;
++---------+------------+----------+------------+
+| Name    | Department | Salary   | SalaryRank |
++---------+------------+----------+------------+
+| Charlie | Finance    | 60000.00 |          1 |
+| Eve     | HR         | 52000.00 |          1 |
+| Alice   | HR         | 50000.00 |          2 |
+| David   | IT         | 75000.00 |          1 |
+| Bob     | IT         | 70000.00 |          2 |
++---------+------------+----------+------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT Name, Salary FROM Employee WHERE Salary > (SELECT AVG(Salary) FROM Employee);
++-------+----------+
+| Name  | Salary   |
++-------+----------+
+| Bob   | 70000.00 |
+| David | 75000.00 |
++-------+----------+
+2 rows in set (0.00 sec)
+
+mysql> WITH AvgSalary AS (SELECT Department, AVG(Salary) AS AvgDeptSalary FROM Employee GROUP BY Department) SELECT e.Name, e.Department, e.Salary, a.AvgDeptSalary FROM Employee e JOIN AvgSalary a ON e.Department = a.Department;
++---------+------------+----------+---------------+
+| Name    | Department | Salary   | AvgDeptSalary |
++---------+------------+----------+---------------+
+| Alice   | HR         | 50000.00 |  51000.000000 |
+| Bob     | IT         | 70000.00 |  72500.000000 |
+| Charlie | Finance    | 60000.00 |  60000.000000 |
+| David   | IT         | 75000.00 |  72500.000000 |
+| Eve     | HR         | 52000.00 |  51000.000000 |
++---------+------------+----------+---------------+
+5 rows in set (0.00 sec)
+

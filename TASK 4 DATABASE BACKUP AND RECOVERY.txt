@@ -1,0 +1,48 @@
+CREATE DATABASE backup_demo; USE backup_demo;
+Query OK, 1 row affected (0.01 sec)
+
+Database changed
+mysql> CREATE TABLE users (id INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(50),email VARCHAR(100));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO users (name, email) VALUES ('Alice', 'alice@example.com'),('Bob', 'bob@example.com');
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO users (name, email) VALUES ('Alice','alice@example.com'),('Bob','bob@example.com');
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM users;
++----+-------+-------------------+
+| id | name  | email             |
++----+-------+-------------------+
+|  1 | Alice | alice@example.com |
+|  2 | Bob   | bob@example.com   |
+|  3 | Alice | alice@example.com |
+|  4 | Bob   | bob@example.com   |
++----+-------+-------------------+
+4 rows in set (0.00 sec)
+
+mysql> mysqldump -u root -p backup_demo > backup_demo.sql
+mysql> DROP DATABASE backup_demo;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> SHOW DATABASES; DROP DATABASE backup_demo;
+ERROR 
++--------------------+
+| Database           |
++--------------------+
+| amrutha            |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> mysql -u root -p backup_demo < backup_demo.sql
+mysql> SELECT * FROM users;
+ERROR 1046 (3D000): No database selected

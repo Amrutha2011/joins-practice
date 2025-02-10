@@ -1,0 +1,63 @@
+TASK 1 JOINS PRACTICE
+
+mysql> CREATE TABLE Employees ( EmployeeID INT PRIMARY KEY,FirstName VARCHAR(50),LastName VARCHAR(50), DepartmentID INT, Salary DECIMAL(10, 2));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> CREATE TABLE Departments ( DepartmentID INT PRIMARY KEY, DepartmentName VARCHAR(50), Location VARCHAR(50));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO Employees (EmployeeID, FirstName, LastName, DepartmentID, Salary) VALUES(1, 'John', 'Doe', 1, 60000),(2, 'Jane', 'Smith', 2, 75000),(3, 'David', 'Lee', 1, 55000),(4, 'Sarah', 'Jones', 3, 80000),(5, 'Michael', 'Brown', NULL, 65000);
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO Departments (DepartmentID, DepartmentName, Location) VALUES(1, 'Sales', 'New York'),(2, 'Marketing', 'London'),(3, 'Engineering', 'San Francisco'),(4, 'HR', 'Chicago');
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> SELECT e.EmployeeID, e.FirstName, e.LastName, d.DepartmentName, d.Location FROM Employees e INNER JOIN Departments d ON e.DepartmentID = d.DepartmentID;
++------------+-----------+----------+----------------+---------------+
+| EmployeeID | FirstName | LastName | DepartmentName | Location      |
++------------+-----------+----------+----------------+---------------+
+|          1 | John      | Doe      | Sales          | New York      |
+|          2 | Jane      | Smith    | Marketing      | London        |
+|          3 | David     | Lee      | Sales          | New York      |
+|          4 | Sarah     | Jones    | Engineering    | San Francisco |
++------------+-----------+----------+----------------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT e.EmployeeID, e.FirstName, e.LastName, d.DepartmentName, d.Location FROM Employees e LEFT JOIN Departments d ON e.DepartmentID = d.DepartmentID;
++------------+-----------+----------+----------------+---------------+
+| EmployeeID | FirstName | LastName | DepartmentName | Location      |
++------------+-----------+----------+----------------+---------------+
+|          1 | John      | Doe      | Sales          | New York      |
+|          2 | Jane      | Smith    | Marketing      | London        |
+|          3 | David     | Lee      | Sales          | New York      |
+|          4 | Sarah     | Jones    | Engineering    | San Francisco |
+|          5 | Michael   | Brown    | NULL           | NULL          |
++------------+-----------+----------+----------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT e.EmployeeID, e.FirstName, e.LastName, d.DepartmentName, d.Location FROM Employees e RIGHT JOIN Departments d ON e.DepartmentID = d.DepartmentID;
++------------+-----------+----------+----------------+---------------+
+| EmployeeID | FirstName | LastName | DepartmentName | Location      |
++------------+-----------+----------+----------------+---------------+
+|          3 | David     | Lee      | Sales          | New York      |
+|          1 | John      | Doe      | Sales          | New York      |
+|          2 | Jane      | Smith    | Marketing      | London        |
+|          4 | Sarah     | Jones    | Engineering    | San Francisco |
+|       NULL | NULL      | NULL     | HR             | Chicago       |
++------------+-----------+----------+----------------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT e.EmployeeID, e.FirstName, e.LastName, d.DepartmentName, d.Location FROM Employees e LEFT JOIN Departments d ON e.DepartmentID = d.DepartmentID UNION SELECT e.EmployeeID, e.FirstName, e.LastName, d.DepartmentName, d.Location FROM Employees e RIGHT JOIN Departments d ON e.DepartmentID = d.DepartmentID;
++------------+-----------+----------+----------------+---------------+
+| EmployeeID | FirstName | LastName | DepartmentName | Location      |
++------------+-----------+----------+----------------+---------------+
+|          1 | John      | Doe      | Sales          | New York      |
+|          2 | Jane      | Smith    | Marketing      | London        |
+|          3 | David     | Lee      | Sales          | New York      |
+|          4 | Sarah     | Jones    | Engineering    | San Francisco |
+|          5 | Michael   | Brown    | NULL           | NULL          |
+|       NULL | NULL      | NULL     | HR             | Chicago       |
++------------+-----------+----------+----------------+---------------+
+6 rows in set (0.00 sec)
