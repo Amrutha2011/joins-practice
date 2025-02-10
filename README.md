@@ -28,3 +28,9 @@ Employees and Departments (employees belong to departments)
 output of task 1
 [TASK 1 JOINS PRACTICE.txt](https://github.com/user-attachments/files/18733871/TASK.1.JOINS.PRACTICE.txt)
 
+output of task 2
+[TASK 2 DATA ANALYSIS WITH COMPLEX QUERIES.txt](https://github.com/user-attachments/files/18733905/TASK.2.DATA.ANALYSIS.WITH.COMPLEX.QUERIES.txt)
+
+output of task 3
+
+
